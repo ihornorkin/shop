@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 import { Router, Route } from 'react-router';
 import Layout from './containers/Layout';
 import Phones from './containers/Phones';
+import Phone from './containers/Phone';
 
 const store = createStore(reducers, composeWithDevTools(
   applyMiddleware(thunk)
@@ -24,5 +25,6 @@ ReactDOM.render(<Provider store={store} >
         <Route component={Layout}>
             <Route path='/' component={Phones}></Route>
         </Route>
+        <Route path='phones/:id' component={Phone} />
     </Router>
 </Provider>, document.getElementById('root'));

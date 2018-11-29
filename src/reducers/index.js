@@ -2,8 +2,12 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
 import phones from './phones';
+import phonesPage from './phonesPage';
+import phonePage from './phonePage';
 
 export default combineReducers({
     phones,
-    routing: routerReducer 
+    phonesPage,
+    phonePage,
+    routing: routerReducer
 })
