@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 
-const getPhoneById = (state, id) => {
+export const getPhoneById = (state, id) => {
     return R.prop(id, state.phones);
 }
 
@@ -10,3 +10,14 @@ export const getPhones = state => {
 }
 
 export const getRenderedPhonesLength = state => R.length(state.phonesPage.ids)
+
+export const getTotalBasketCount = state => R.length(state.basket);
+
+export const getTotalBasketPrice = state => {
+    const totalPrice = R.compose(
+        R.sum,
+        R.pluck('price'),
+        R.map(id => getPhoneById(state, id))
+    )(state.basket)
+    return totalPrice;
+}
