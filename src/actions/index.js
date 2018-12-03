@@ -8,12 +8,19 @@ import {
     FETCH_PHONE_BY_ID_START,
     FETCH_PHONE_BY_ID_SUCCESS,
     FETCH_PHONE_BY_ID_ERROR,
-    ADD_PHONE_TO_BASKET
+    ADD_PHONE_TO_BASKET,
+    SEARCH_PHONE,
+    FETCH_CATEGORIES_START,
+    FETCH_CATEGORIES_SUCCESS,
+    FETCH_CATEGORIES_ERROR,
+    REMOVE_PHONE_FROM_BASKET,
+    CLEAN_BASKET
 } from '../actionTypes';
 import {
     fetchPhones as fetchPhonesApi,
     loadMorePhones as loadMorePhonesApi,
-    fetchPhoneByIdApi
+    fetchPhoneByIdApi,
+    fetchCategories as fetchCategoriesApi
 } from '../api/index';
 import { getRenderedPhonesLength } from '../selectors/selectors';
 
@@ -55,7 +62,7 @@ export const loadMorePhones = () => async (dispatch, getState) => {
 }
 
 export const fetchPhoneById = id => async dispatch => {
-    dispatch({type: FETCH_PHONE_BY_ID_START})
+    dispatch({ type: FETCH_PHONE_BY_ID_START })
 
     try {
         const phone = await fetchPhoneByIdApi(id)
@@ -77,4 +84,46 @@ export const addPhoneToBasket = id => dispatch => {
         type: ADD_PHONE_TO_BASKET,
         payload: id
     })
+}
+
+export const searchPhone = text => dispatch => {
+    dispatch({
+        type: SEARCH_PHONE,
+        payload: text
+    })
+}
+
+export const fetchCategories = () => async dispatch => {
+    dispatch({ type: FETCH_CATEGORIES_START })
+
+    try {
+        const categories = await fetchCategoriesApi()
+        dispatch({
+            type: FETCH_CATEGORIES_SUCCESS,
+            payload: categories
+        })
+    } catch (err) {
+        dispatch({
+            type: FETCH_CATEGORIES_ERROR,
+            payload: err,
+            error: true
+        })
+    }
+}
+
+export const removePhoneFromBasket = id => dispatch => {
+    dispatch({
+        type: REMOVE_PHONE_FROM_BASKET,
+        payload: id
+    })
+}
+
+export const cleanBasket = () => dispatch => {
+    dispatch({
+        type: CLEAN_BASKET
+    })
+}
+
+export const basketCheckout = phones => () => {
+    alert(JSON.stringify(phones));
 }

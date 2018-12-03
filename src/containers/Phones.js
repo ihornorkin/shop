@@ -3,12 +3,18 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import * as R from 'ramda';
 
-import { fetchPhones, loadMorePhones, addPhoneToBasket } from '../actions';
+import {
+    fetchPhones,
+    loadMorePhones,
+    addPhoneToBasket,
+    fetchCategories
+} from '../actions';
 import { getPhones } from '../selectors/selectors';
 
 class Phones extends Component {
     componentWillMount() {
-        this.props.fetchPhones()
+        this.props.fetchPhones();
+        this.props.fetchCategories();
     }
 
     render() {
@@ -47,7 +53,7 @@ class Phones extends Component {
                 <div className="row">
                     <div className="col-md-12">
                         <button className="btn btn-primary"
-                                onClick={loadMorePhones}>
+                            onClick={loadMorePhones}>
                             Load more
                         </button>
                     </div>
@@ -57,14 +63,15 @@ class Phones extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    phones: getPhones(state)
+const mapStateToProps = (state, ownProps) => ({
+    phones: getPhones(state, ownProps)
 })
 
 const mapDispatchToProps = {
     fetchPhones,
     loadMorePhones,
-    addPhoneToBasket
+    addPhoneToBasket,
+    fetchCategories
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Phones);
